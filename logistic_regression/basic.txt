@@ -1,0 +1,6 @@
+Logistic regression classification problems invloves assigning labels and classes to instances and extended to multi-class and multi-label classification problems 
+(range between 0 and 1 as probability, also known as logit regression, Maximum-entropy classififcation (MaxEnt), log-linear classifier)
+
+e.g. email can be spam or not 
+
+although it is regression it can be used for classificatio purpose multi-label and multi-class 

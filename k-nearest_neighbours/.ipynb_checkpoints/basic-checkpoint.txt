@@ -1,0 +1,37 @@
+A classifiers that is looking the closest instances in properties to the given instances 
+Lazy algorithm - due to it's nature of remembering all the dataset instead of derieve any function
+
+steps to build a model and then classify a new instance:
+
+k-nearest neighbor begin by choosing a value of K and a distance of semilarity matric
+    |
+    |
+    V
+looking for some indexing structure like kd-tree and ball tree
+    |
+    |
+    V
+then it decides the class of the new instance by majority vote in the case of classification
+    |
+    |
+    V
+choosing the optimal value of k comes under the domain of hyperparameter optimization ~ depend on the 
+underline data (selecting a bad k will lead to underfitting/overfitting)
+
+
+distance and similarity can be calculated by::
+
+euclidian distance:
+dist((x,y), (a,b)) = sqrt((x-a)^2 + (y-b)^2)
+
+cosine similarity:
+sim(x, y) = x.y / |x||y|
+
+k-dimensional tree -> is a ds thats involves making a binary tree structure in which points are filled, it contains nested 
+orthotropic regions which is formed by partitioning the parameter space along the data axes.
+formation of kd is fast caused partitioning is only performed by data axes, no n-dimensional distance need to be computed
+O(logm) (m - no. of instances), increasing of features can be inefficient for kd tree
+
+ball tree -> ds that partitioning the data in a series of nesting hyper-spheres, costly operation but very efficient for highly structured data which have high dimensions
+
+
