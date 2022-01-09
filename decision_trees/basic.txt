@@ -1,0 +1,25 @@
+Provide an o/p that can be easily understandable, it also provide the basis for many ensemble methods, which involves using multiple models for inference and producing the o/p for the dataset at hand
+
+construction:
+root node -> internal nodes -> leaf nodes (terminal nodes)
+terminal nodes - homogeneousity 
+root node - refers to all instance falling in the dataset
+internal nodes - a tree can navigated with a new row of data following each branch with the splits until final 
+prediction is made
+
+ID3 - Iterative Dichotomiser 3, developed by Ross Quinlan 1986 - finding categorical features for each nodes in the tree which give maximum categorical features for each node of the tree
+
+C4.5 - it remove the restriction that features should be categorical to build the tree, unlike the ID3 algorithm, this algorithm is used by partitioning the continuous or numerical input features into a discreate set of intervals, it convert the trained trees into to sets of if-then rules
+
+C5.0 - more accuracy and less memory use that C4.5 (proprietary license)
+
+CART - Classification and Regression Trees, similar to C4.5 with provide additional advantage beacuse it also deal with Regression Problems and does not compute rule sets. Maximum information gain at each node.
+
+CART is binary tree 
+Consist of step Induction and pruning 
+Induction - training and model
+Pruning is the step of removing an unnecessary structure from the Decision Tree to avoid overfitting
+
+For classification problems, using Gini-Index function Sum(p x (1-p)) 
+
+Recommended to deal with imbalanced class problem first before make decision tree
