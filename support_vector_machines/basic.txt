@@ -1,0 +1,6 @@
+It is a classificaton algorithm in machine learning, also used for regression
+SVM works very well with limited dataset
+
+Data points closer to the hyperplane that influence the position and orientation of the hyperplane are called Support vectors
+
+SVM classification is robust to outliers 
