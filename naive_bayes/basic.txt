@@ -1,12 +1,10 @@
-Based on Bayes' theorem
-P(A/B) = (P(B/A) * P(A)) / P(B)
-where, 
-P(A/B) conditional probability of A, given B has occurred - posterior probability 
-Posterior probability is a probability of an event after evidence is seen
-P(A) - probability of A (prior probability - probability of event before evidence is seen) 
-P(B) - evidence 
-P(B/A) - conditional probatility of B, given A is occurred - Likelihood
+Based on Bayes' theorem:
+P(A/B) = (P(B/A) * P(A)) / P(B) where, 
+P(A/B) conditional probability of A, given B has occurred - posterior probability. 
+Posterior probability is a probability of an event after evidence is seen.
+P(A) - probability of A (prior probability - probability of event before evidence is seen).
+P(B) - evidence.
+P(B/A) - conditional probatility of B, given A is occurred - Likelihood.
 
-works very well fo rNatural Language Problems - document classification and spam filtering
-
-
+Works very well for Natural Language Problems:
+-> document classification and spam filtering.
