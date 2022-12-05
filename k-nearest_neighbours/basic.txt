@@ -3,7 +3,7 @@ Lazy algorithm - due to it's nature of remembering all the dataset instead of de
 
 steps to build a model and then classify a new instance:
 
-k-nearest neighbor begin by choosing a value of K and a distance of semilarity matric
+k-nearest neighbour begin by choosing a value of K and a distance of semilarity matric
     |
     |
     V
@@ -15,7 +15,7 @@ then it decides the class of the new instance by majority vote in the case of cl
     |
     |
     V
-choosing the optimal value of k comes under the domain of hyperparameter optimization ~ depend on the 
+choosing the optimal value of k comes under the domain of hyper parameter optimisation ~ depend on the 
 underline data (selecting a bad k will lead to underfitting/overfitting)
 
 
