@@ -1,0 +1,18 @@
+For prediction we need data-set that can be feeded to computer and need good statistical algorithm that can train and 
+distinguish the data to target the correct output 
+Classification -> prediction of discrete value outcomes 
+1. Binary classification -> only have two classes 
+one vs one 
+2. Multi-class classification -> (optical character recognition, face recognition) can addoped from binary classification 
+one vs one / one vs rest
+3. Multi-label classification -> multiple things in a picture and lebel them
+can't use 1 and 2 
+4. Imbalance classification -> task of classification where the number of instances in each class are unqually distributed
+(most of the problem are here) 
+5. Multioutput-multiclass classification (multi-task) -> single classifier handles several joint classification task
+using in the relm of deep learning 
+e.g. NLP we jointly use NLP tasks, parts of speech tagging, chunking, named entity recognition, language modeling 
+
+
+
+
