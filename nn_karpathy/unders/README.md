@@ -1,1 +1,1 @@
-understanding gpt
+Understanding gpt.
