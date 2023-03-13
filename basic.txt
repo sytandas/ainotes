@@ -13,3 +13,5 @@ can't use 1 and 2.
 using in the relm of deep learning.
 e.g. NLP we jointly use NLP tasks, parts of speech tagging, chunking, named entity recognition, language modeling.
 
+How to test accuracy?
+How to train with small dataset higher accuracy! Is it possible?
