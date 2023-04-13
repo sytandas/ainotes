@@ -1,6 +1,0 @@
-Neural network is mathematical expression.
-Taking input date and taking weight data as:
-Input -> (mathematical equation).
-Output -> prediction of neural net or loss function.
-Backpropagation - is just an abstract mathematical equation, doesn't care about neural network.
-It is recursive application of chain rule backward of the computational graph.
