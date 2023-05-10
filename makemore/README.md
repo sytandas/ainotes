@@ -7,4 +7,4 @@ RNN
 GRU
 Transformer
 
-inspire/learning from [karpathy/makemore](https://github.com/karpathy/makemore)
+learning from [karpathy/makemore](https://github.com/karpathy/makemore)
