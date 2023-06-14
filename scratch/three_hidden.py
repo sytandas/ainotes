@@ -2,6 +2,10 @@ import numpy as np
 np.random.seed(0)
 
 # dataset
+# Copyright (c) 2015 Andrej Karpathy
+# License: https://github.com/cs231n/cs231n.github.io/blob/master/LICENSE
+# Source: https://cs231n.github.io/neural-networks-case-study/
+
 def spiral_data(samples, classes):
     X = np.zeros((samples*classes, 2))
     y = np.zeros(samples*classes, dtype='uint8')
@@ -12,8 +16,9 @@ def spiral_data(samples, classes):
         X[ix] = np.c_[r*np.sin(t*2.5), r*np.cos(t*2.5)]
         y[ix] = class_number
     return X, y 
+
 # layer
-class Layer_dense:
+class layer_dense:
     def __init__(self, n_inputs, n_neurons):
         self.weights = 0.10 * np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
@@ -24,7 +29,7 @@ class Layer_dense:
 class activation_relu:
     def forward(self, inputs):
         self.outputs = np.maximum(0, inputs)
-
+# Softmax
 class activation_solftmax:
     def forward(self, inputs):
         exp_value = np.exp(inputs - np.max(inputs, axis=1, keepdims=True)) # input - max(input) -> for avoiding overflow
@@ -33,10 +38,10 @@ class activation_solftmax:
 
 X, y = spiral_data(samples=100, classes=3)
 
-dense1 =Layer_dense(2,3)
+dense1 =layer_dense(2,3)
 activation1 = activation_relu()
 
-dense2 = Layer_dense(3, 3)
+dense2 = layer_dense(3, 3)
 activation2 = activation_solftmax()
 
 dense1.forward(X)
