@@ -1,0 +1,3 @@
+Implement a network that classifies MNIST and then take own imgs of numbers and feed through it and figure out how to do that.
+in tinygrad and pytroch as well -> compair
+NNFS (Neural Networks from Scratch) book of reference. 
