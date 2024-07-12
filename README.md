@@ -1,6 +1,6 @@
 # ai_notebook
 
-Just for fun.
+Learning and fun.
 
 ### License
 MIT
