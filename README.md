@@ -1,6 +1,6 @@
 # ai_notebook
 
-Learning and fun
+Learn purpose
 
 ### License
 MIT
