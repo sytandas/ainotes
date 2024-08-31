@@ -1,2 +1,2 @@
-# mlperf inference stable diffusion - pt -> tiny, COCO 2014 
-
+# how to do mlperf on tinygrad stable diffusion!!!
+# findings: should be written from scratch after understanding the codebase and goals.
