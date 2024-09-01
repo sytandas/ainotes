@@ -3,4 +3,4 @@
 # tinygrad -> examples -> mlperf
 # trying to understand how to do inference on tinygrad! from the old commit possibly. 
 
-# t1: choose dataset which to use for sd, trail run on es@dl. 
+# t1: choose dataset which to use for sd, trail run on es@dl, early morning 2nd Sep. 
