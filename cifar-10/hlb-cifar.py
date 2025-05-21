@@ -5,7 +5,8 @@ implementation of https://github.com/tysam-code/hlb-CIFAR10/blob/main/main.py
 import os
 import torch
 import torch.nn as nn
-import torch.optim as optim 
+import torch.optim as optim
+import torch.utils 
 from dataset import get_cifar10_dataloaders
 from model import SimpleHLBCNN
 import torch.nn.functional as F
@@ -56,8 +57,22 @@ if not os.path.exists(hyp['misc']['data_location']):
 
         transform = transforms.Compose([
             transforms.ToTensor()])
+        cifar10 = torchvision.datasets.CIFAR10('cifar10/', download=True, train=True, transform=transform)
+        cifar10_eval=torchvision.datasets.CIFAR10('cifar10/', download=False, train=False, transform=transform)
+        train_dataset = torch.utils.DataLoader(cifar10, batch_size=len(cifar10), drop_last=True, shuffle=True, num_workers=2, persistant_workers=False)
+        eval_dataset = torch.utils.DataLoader(cifar10_eval, batch_size=len(cifar10_eval), drop_last=True, shuffle=True, num_workers=2, persistant_workers=False)
 
-        cifar10      = torchvision.datasets.CIFAR10('cifar10/', download=True,  train=True,  transform=transform)
+        train_dataset_gpu = {}
+        eval_dataset_gpu = {}
+
+        train_dataset_gpu['images'], train_dataset_gpu['targets'] = [item.to(device=hyp['misc']['device'], non_blocking=True) for item in next(iter(train_dataset))]
+        eval_dataset_gpu['images'],  eval_dataset_gpu['targets']  = [item.to(device=hyp['misc']['device'], non_blocking=True) for item in next(iter(eval_dataset)) ]
+
+        cifar10_std, cifar10_mean = torch.std_mean(train_dataset_gpu['images'], dim=(0,2, 3))
+
+        def batch_nomralize(input_images, mean, std):
+                return (input_images - mean.view(1, -1, 1, 1)) / std.view(1, -1, 1, 1)
+       
 
 # helper functions
 
