@@ -3,6 +3,7 @@ hlb_cifar10 using torch backend for tinygradA
 implementation of https://github.com/tysam-code/hlb-CIFAR10/blob/main/main.py
 """
 import os
+from functools import partial
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -70,8 +71,19 @@ if not os.path.exists(hyp['misc']['data_location']):
 
         cifar10_std, cifar10_mean = torch.std_mean(train_dataset_gpu['images'], dim=(0,2, 3))
 
-        def batch_nomralize(input_images, mean, std):
+        def batch_nomralize_images(input_images, mean, std):
                 return (input_images - mean.view(1, -1, 1, 1)) / std.view(1, -1, 1, 1)
+        
+        batch_nomralize_images = partial(batch_nomralize_images, mean = cifar10_mean, std = cifar10_std) # preload with mean and std
+
+        # batch normalize dataset 
+        train_dataset_gpu['images'] = batch_nomralize_images(train_dataset_gpu['images'])
+        eval_dataset_gpu['images'] = batch_nomralize_images(eval_dataset_gpu['images'])
+
+        data = {
+            'train': train_dataset_gpu,
+            'eval': eval_dataset_gpu
+        }
        
 
 # helper functions
