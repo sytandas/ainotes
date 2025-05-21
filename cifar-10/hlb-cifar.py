@@ -84,6 +84,28 @@ if not os.path.exists(hyp['misc']['data_location']):
             'train': train_dataset_gpu,
             'eval': eval_dataset_gpu
         }
+
+        ## Convert dataset to FP16 
+        data['train']['images'] = data['train']['images'].half().requires_grad_(False)
+        data['eval']['images']  = data['eval']['images'].half().requires_grad_(False)
+
+        # Convert this to one-hot to support the usage of cutmix 
+        data['train']['targets'] = F.one_hot(data['train']['targets']).half()
+        data['eval']['targets'] = F.one_hot(data['eval']['targets']).half()
+
+        torch.save(data, hyp['misc']['data_location'])
+
+else:
+    ## This is effectively instantaneous, and takes us practically straight to where the dataloader-loaded dataset would be.
+    ## So as long as you run the above loading process once, and keep the file on the disc it's specified by default in the above
+    ## hyp dictionary, then we should be good. :)
+    data = torch.load(hyp['misc']['data_location'])
+
+# Pad the GPU training dataset
+if hyp['net']['pad_amount'] > 0:
+    ## Uncomfortable shorthand, but basically we pad evenly on all _4_ sides with the pad_amount specified in the original dictionary
+    data['train']['images'] = F.pad(data['train']['images'], (hyp['net']['pad_amount'],)*4, 'reflect')
+
        
 
 # helper functions
