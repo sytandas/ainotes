@@ -3,6 +3,8 @@ hlb_cifar10 using torch backend for tinygradA
 implementation of https://github.com/tysam-code/hlb-CIFAR10/blob/main/main.py
 """
 import os
+import copy
+import math
 from functools import partial
 import torch
 import torch.nn as nn
@@ -96,7 +98,7 @@ if not os.path.exists(hyp['misc']['data_location']):
         torch.save(data, hyp['misc']['data_location'])
 
 else:
-    ## This is effectively instantaneous, and takes us practically straight to where the dataloader-loaded dataset would be.
+    ## This is effectively instantaneous, and takes us practically straight to where the dataloader-loaded dataset would be. :)=
     ## So as long as you run the above loading process once, and keep the file on the disc it's specified by default in the above
     ## hyp dictionary, then we should be good. :)
     data = torch.load(hyp['misc']['data_location'])
@@ -106,7 +108,82 @@ if hyp['net']['pad_amount'] > 0:
     ## Uncomfortable shorthand, but basically we pad evenly on all _4_ sides with the pad_amount specified in the original dictionary
     data['train']['images'] = F.pad(data['train']['images'], (hyp['net']['pad_amount'],)*4, 'reflect')
 
-       
+
+# network 
+class BatchNorm(nn.BatchNorm2d):
+    def __init__(self, num_features, eps=1e-12, momentum=hyp['net']['batch_norm_momentum'], weight=False, bias=True):
+        super().__init__(num_features, eps=eps, momentum=momentum)
+        self.weight.data.fill_(1.0)
+        self.bias.data.fill_(0.0)
+        self.weight.requires_grad = weight
+        self.bias.requires_grad = bias
+
+class BatchNorm(nn.BatchNorm2d):
+    def __init__(self, num_features, eps=1e-12, momentum=hyp['net']['batch_norm_momentum'], weight=False, bias=True):
+        super().__init__(num_features, eps=eps, momentum=momentum)
+        self.weight.data.fill_(1.0)
+        self.bias.data.fill_(0.0)
+        self.weight.requires_grad = weight
+        self.bias.requires_grad = bias
+
+# Allows us to set default arguments for the whole convolution itself.
+# Having an outer class like this does add space and complexity but offers us
+# a ton of freedom when it comes to hacking in unique functionality for each layer type
+class Conv(nn.Conv2d):
+    def __init__(self, *args, **kwargs):
+        kwargs = {**default_conv_kwargs, **kwargs}
+        super().__init__(*args, **kwargs)
+        self.kwargs = kwargs
+
+class Linear(nn.Linear):
+    def __init__(self, *args, temperature=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.kwargs = kwargs
+        self.temperature = temperature
+
+    def forward(self, x):
+        if self.temperature is not None:
+            weight = self.weight * self.temperature
+        else:
+            weight = self.weight
+        return x @ weight.T
+
+# can hack any changes to each convolution group that you want directly in here
+class ConvGroup(nn.Module):
+    def __init__(self, channels_in, channels_out):
+        super().__init__()
+        self.channels_in  = channels_in
+        self.channels_out = channels_out
+
+        self.pool1 = nn.MaxPool2d(2)
+        self.conv1 = Conv(channels_in,  channels_out)
+        self.conv2 = Conv(channels_out, channels_out)
+
+        self.norm1 = BatchNorm(channels_out)
+        self.norm2 = BatchNorm(channels_out)
+
+        self.activ = nn.GELU()
+
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.pool1(x)
+        x = self.norm1(x)
+        x = self.activ(x)
+        x = self.conv2(x)
+        x = self.norm2(x)
+        x = self.activ(x)
+
+        return x
+
+class FastGlobalMaxPooling(nn.Module):
+    def __init__(self):
+        super().__init__()
+    
+    def forward(self, x):
+        # Previously was chained torch.max calls.
+        # requires less time than AdaptiveMax2dPooling -- about ~.3s for the entire run, in fact (which is pretty significant! :O :D :O :O <3 <3 <3 <3)
+        return torch.amax(x, dim=(2,3)) # Global maximum pooling 
 
 # helper functions
 
