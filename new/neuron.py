@@ -43,4 +43,3 @@ layer1 = sigmoid(np.dot(test_input, w1))
 output = sigmoid(np.dot(layer1, w2))
 
 print(output)
-
