@@ -27,7 +27,7 @@ This is a self-study repo — some notebooks may be incomplete, messy, or purely
 
 ## ✨ Why this repo?
 
-To learn by doing. `ainotes` is my digital notebook for testing ideas, building intuition, and revisiting what I've learned.
+To learn by doing for testing ideas, building intuition, and revisiting what I've learned.
 
 ---
 
